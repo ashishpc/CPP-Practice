@@ -1,0 +1,40 @@
+Day 3---Docker swarm   CENTOS    |
+---------------------------
+
+
+ifconfig
+ping ipaddress
+
+#systemctl start docker
+#systemctl enable docker
+systemctl status docker
+
+
+usermod -aG docker <username> //join docker group by specific user
+iptables -F
+docker swarm init --advertise-addr 192.168.23.137
+docker swarm join \
+    --token SWMTKN-1-2uw8xbp2ic8lnxv7hjlqngowglzchidzb5ds7exi3bp1bekp48-3edbypaqpr46liuse2rx30m5j \
+    192.168.23.137:2377
+
+
+docker node ls //manager
+cd etc 
+vi hostname
+docker swarm join \
+    --token SWMTKN-1-5fjx8ocz59nib9hlkbhsegk5p06qk8g9ogftdnrse8oazeufb9-0kuoz1xwnj2sgx5tajruhx1bf \
+    192.168.23.137:2377
+	
+--------------------------------------------------------------------	
+$ docker service create --name my-web1 --publish 8081:80 --replicas 2 nginx
+Deploy Nginx Service on Swarm Cluster
+
+	
+---------------------------------------------------------------------
+List the newly deployed service on Swarm Cluster.
+
+$ docker service ls
+-----------------------------------------------------------------------
+Now , if we need to scale the nginx service we will make 3 replicas and to do that run the following command on manager node:
+$ docker service scale my-web1=3
+----------------------------------------------------------------------
